@@ -1,0 +1,24 @@
+{
+  "name": "challenge-back-end",
+  "version": "1.0.0",
+  "description": "Você precisa instalar o Node.js e o MongoDB.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.10",
+    "node": "^0.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://cassiadeny@bitbucket.org/cassiadeny/challenge-backend.git"
+  },
+  "author": "Cássia Denyelli Moreira",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/cassiadeny/challenge-backend#readme"
+}
