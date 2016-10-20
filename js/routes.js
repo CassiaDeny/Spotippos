@@ -1,6 +1,6 @@
 exports.routes = function(app){
 
-	var dbConn = require("./db.js");
+	var searchProperties = require("./searchProperties.js");
 
 	//Server up!
 	app.get("/", function(req, res){
@@ -9,10 +9,17 @@ exports.routes = function(app){
 
 	//2. Mostre um imóvel específico em Spotippos =]
 	app.get("/properties/:id", function(req, res){
-	
-		var idParam = req.params.id;
-		dbConn.getProperty(idParam, res);
+
+		searchProperties.one(req.params, res);
 
 	});
+
+	//3. Busque imóveis em Spotippos :D
+	app.get("/properties", function(req, res){
+
+		searchProperties.many(req.query, res);		
+
+	});
+
 
 }
