@@ -5,9 +5,10 @@ var path = require("path");
 var bodyParser = require("body-parser");
 
 app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/src"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var router = require("./js/routes.js");
+var router = require("./src/routes.js");
 router.routes(app);
 
 var server = app.listen(process.env.PORT || 3000, function(){

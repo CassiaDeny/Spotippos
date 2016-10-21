@@ -1,3 +1,9 @@
+var dbConn = require("./data/db.js");
+var provinces = require("./provinces.js");
+var res;
+
+/*============================================================*/
+
 exports.many = function(query, response){
 	res = response;
 	return isValidParams(query);
@@ -8,10 +14,7 @@ exports.one = function(param, response){
 		return isValidId(param);
 }
 
-var dbConn = require("./db.js");
-var provinces = require("./provinces.js");
-var res;
-
+/*============================================================*/
 function isValidId(param){
 
 	if(isNaN(param.id)){
@@ -27,13 +30,13 @@ function loadOne(id){
 
 	dbConn.dbConnection(function(db, config){
 
-		db.collection(config.propertiesCollection()).findOne({'id':id}, {"_id":0}, function(err, doc){
+		db.collection(config.propCollection).findOne({'id':id}, {"_id":0}, function(err, doc){
 
 				if (err) {
 		      		return handleError(res, err.message, "Failed to loadOne");
 		    	} else {
 
-		    		doc.provinces = pointLocation(doc.long, doc.lat);
+		    		doc.provinces = provinces.pointProvince(prop.long,  prop.lat);
 		      		return res.status(200).json(doc); 
 		    	}
 		});
@@ -75,7 +78,7 @@ function loadMany(pointA, pointB){
 
 	dbConn.dbConnection(function(db, config){
 
-		db.collection(config.propertiesCollection())
+		db.collection(config.propCollection)
 			.find(query, project).toArray(function(err, docs){
 
 					if (err) {
@@ -98,10 +101,6 @@ function findLocation(docs){
 	return processJson(properties, docs.length);
 }
 
-function pointLocation(long, lat){
-
-	return provinces.pointProvince(long, lat);
-}
 
 function processJson(properties, count){
 
