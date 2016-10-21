@@ -84,3 +84,5 @@ jspm_packages
 # Ignore 
 js/config.js
 src/config.js
+src/config.json
+src/data/config.json
