@@ -4,13 +4,12 @@ exports.many = function(query, response){
 }
 		
 exports.one = function(param, response){
-
 		res = response;
 		return isValidId(param);
-
 }
 
 var dbConn = require("./db.js");
+var provinces = require("./provinces.js");
 var res;
 
 function isValidId(param){
@@ -92,7 +91,7 @@ function loadMany(pointA, pointB){
 function findLocation(docs){
 
 	var properties = docs.map(function(prop){
-		prop.provinces = pointLocation(prop.long, prop.lat);
+		prop.provinces =  provinces.pointProvince(prop.long,  prop.lat);
 		return prop;
 	});
 
@@ -100,7 +99,8 @@ function findLocation(docs){
 }
 
 function pointLocation(long, lat){
-	return "[teste]";
+
+	return provinces.pointProvince(long, lat);
 }
 
 function processJson(properties, count){
