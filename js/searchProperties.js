@@ -1,12 +1,51 @@
+exports.many = function(query, response){
+	res = response;
+	return isValidParams(query);
+}
+		
+exports.one = function(param, response){
+
+		res = response;
+		return isValidId(param);
+
+}
+
 var dbConn = require("./db.js");
+var res;
 
-exports.many = function(query, res){
+function isValidId(param){
 
-		if(isNaN(query.ax) || isNaN(query.ay) || isNaN(query.bx) || isNaN(query.by)){
-			console.log("não informou os pontos corretamente");
-			res.sendStatus(400);
-			return; 
-		}
+	if(isNaN(param.id)){
+		return res.status(400).send('Parâmetros incorretos!');
+	} else {
+		var id = parseInt(param.id);
+		return loadOne(id);
+	}
+
+}
+
+function loadOne(id){
+
+	dbConn.dbConnection(function(db, config){
+
+		db.collection(config.propertiesCollection()).findOne({'id':id}, {"_id":0}, function(err, doc){
+
+				if (err) {
+		      		return handleError(res, err.message, "Failed to loadOne");
+		    	} else {
+
+		    		doc.provinces = pointLocation(doc.long, doc.lat);
+		      		return res.status(200).json(doc); 
+		    	}
+		});
+	});
+}
+
+function isValidParams(query){
+	
+	if(isNaN(query.ax) || isNaN(query.ay) || isNaN(query.bx) || isNaN(query.by)){
+		return res.status(400).send('Parâmetros incorretos!');
+	} else {
 
 		var pointA = {
 			long: parseInt(query.ax),
@@ -18,46 +57,56 @@ exports.many = function(query, res){
 			lat: parseInt(query.by)
 		};
 
-		dbConn.dbConnection(function(db, config){
-
-			db.collection(config.propertiesCollection())
-				.find(
-					{ $and: 
-						[ 
-							{long: {$gte: pointA.long}},
-							{long: {$lte: pointB.long}},
-							{lat: {$gte: pointB.lat}},
-							{lat: {$lte: pointA.lat}}
-						]
-					},
-					{_id:0}
-				).toArray(function(err, docs){
-
-						if (err) {
-				      		handleError(res, err.message, "Failed to update contact");
-				      		console.log("ERRO " + err.message);
-				    	} else {
-				      		res.status(201).json(docs);
-				    	}
-					});
-		});
+		return loadMany(pointA, pointB);
+	}
 }
 
-exports.one = function(param, res){
+function loadMany(pointA, pointB){
 
-		var idParam = param.id;
-	
-		dbConn.dbConnection(function(db, config){
+	var query = {$and: 
+		[ 
+			{long: {$gte: pointA.long}},
+			{long: {$lte: pointB.long}},
+			{lat: {$gte: pointB.lat}},
+			{lat: {$lte: pointA.lat}}
+		]
+	};
 
-			var id = parseInt(idParam) ;
+	var project = {_id:0};
 
-			db.collection(config.propertiesCollection()).findOne({'id':id}, {"_id":0}, function(err, doc){
+	dbConn.dbConnection(function(db, config){
+
+		db.collection(config.propertiesCollection())
+			.find(query, project).toArray(function(err, docs){
 
 					if (err) {
-			      		handleError(res, err.message, "Failed to update contact");
+						console.log("ERRO " + err.message);
+			      		return handleError(res, err.message, "Failed to update contact");
 			    	} else {
-			      		res.status(201).json(doc);
+			    		return findLocation(docs, res);
 			    	}
 			});
 		});
+}
+
+function findLocation(docs){
+
+	var properties = docs.map(function(prop){
+		prop.provinces = pointLocation(prop.long, prop.lat);
+		return prop;
+	});
+
+	return processJson(properties, docs.length);
+}
+
+function pointLocation(long, lat){
+	return "[teste]";
+}
+
+function processJson(properties, count){
+
+	var json = {'totalProperties': count};
+	json.properties = properties;
+
+	return res.status(200).json(json); 
 }
