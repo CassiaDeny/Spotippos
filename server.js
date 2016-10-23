@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/src"));
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var router = require("./src/routes.js");
