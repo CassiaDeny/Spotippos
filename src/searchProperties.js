@@ -36,7 +36,7 @@ function loadOne(id){
 		      		return handleError(res, err.message, "Failed to loadOne");
 		    	} else {
 
-		    		doc.provinces = provinces.pointProvince(prop.long,  prop.lat);
+		    		doc.provinces = provinces.pointProvince(doc.long,  doc.lat);
 		      		return res.status(200).json(doc); 
 		    	}
 		});

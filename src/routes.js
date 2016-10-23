@@ -1,7 +1,7 @@
 exports.routes = function(app){
 
 	var searchProperties = require("./searchProperties.js");
-	var insertProperty = require("./property/insert.js");
+	var insertProperty = require("./insert.js");
 
 	console.log("carregou as rotas");
 
@@ -27,6 +27,8 @@ exports.routes = function(app){
 
 	//1. Crie imóveis em Spotippos :)
 	app.post("/property", function(req, res){
+
 		insertProperty.insertProperty(req.body, res);
+
 	});
 }

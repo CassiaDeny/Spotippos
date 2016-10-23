@@ -1,34 +1,16 @@
-var res;
 var rules = require("./spottipos-rules");
 console.log("dentro do insert.js")
 
-exports.insertProperty = function(body, response){
-	res =  response;
-	return fieldsValidation(body);	
+exports.validations = function(body, response){
+
+	var error = fieldsValidation(body);
+
+	if (error.length == 0){
+		error =  bussinesValidation(body)
+	}
+
+	return error;
 }
-
-function bussinesValidation(body){
-
-	res.end();
-
-}
-
-/*
-	var pointValidation = function(field){
-
-		var ruleX = rules.limits.x;
-		var ruleY = rules.limits.y;
-
-			if ((point.x >= ruleX.min && point.x <= ruleX.max) &&
-				(point.y >= ruleY.min && point.y <= ruleY.max)){
-				return true;
-			} else {
-					//412 Pré-condição falhou
-					return false;
-			}	 
-		}
-*/
-
 
 function fieldsValidation(body){
 
@@ -46,14 +28,7 @@ function fieldsValidation(body){
 	fieldsValidations.push({action: requiredFieldsValidation, msgError:"Informe o(s) valor(es) para: " });
 	fieldsValidations.push({action: numberFieldsValidation,  msgError:"Informe valor(es) numérico(s) para: "} );
 
-	var errors = validFields(fields, fieldsValidations, 0);
-
-	if (errors.length > 0){
-		return res.status(412).send(errors);
-	}
-	else {
-		return bussinesValidation(body)	;
-	}
+	return validFields(fields, fieldsValidations, 0);
 }
 
 function validFields(fields, actions, index){
@@ -108,9 +83,7 @@ function numberFieldsValidation(field){
 	return isValid;
 }
 
+function bussinesValidation(body){
 
-
-
-
-
-
+	return ""	;
+}
