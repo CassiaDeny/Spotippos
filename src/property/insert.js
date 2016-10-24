@@ -1,7 +1,7 @@
-'use strict';
+
 
 var val = require("./validations");
-var dbConn = require("./data/db.js");
+var dbConn = require("../data/db.js");
 var json = {httpCode:"", msg:"", data:""};
 var res;
 

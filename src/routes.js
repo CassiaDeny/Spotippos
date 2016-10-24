@@ -1,11 +1,8 @@
-'use strict';
-
-
 exports.routes = function(app){
 
-	var onePropertie = require("./search-one.js");
-	var manyProperties = require("./search-many.js");
-	var property = require("./insert.js");
+	var onePropertie = require("./property/search-one.js");
+	var manyProperties = require("./property/search-many.js");
+	var property = require("./property/insert.js");
 
 	//Server up!
 	app.get("/", function(req, res){

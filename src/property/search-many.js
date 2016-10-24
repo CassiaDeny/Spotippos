@@ -1,7 +1,5 @@
-'use strict';
-
-var dbConn = require("./data/db.js");
-var provinces = require("./provinces.js");
+var dbConn = require("../data/db.js");
+var provinces = require("../provinces.js");
 var res;
 var json = {httpCode:"", msg:"", data:""};
 

@@ -1,6 +1,5 @@
-'use strict';
 
-var rules = require("./spottipos-rules");
+var rules = require("../spottipos-rules");
 
 exports.validations = function(body){
 
