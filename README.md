@@ -1,4 +1,4 @@
-# Code Challenge - Desafio escolhido: Back-End 
+# Spotippos Code Challenge - Desafio escolhido: Back-End 
 
 ## Running project
 
