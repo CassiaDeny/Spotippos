@@ -1,9 +1,11 @@
+'use strict';
+
+
 exports.routes = function(app){
 
-	var searchProperties = require("./searchProperties.js");
-	var insertProperty = require("./insert.js");
-
-	console.log("carregou as rotas");
+	var onePropertie = require("./search-one.js");
+	var manyProperties = require("./search-many.js");
+	var property = require("./insert.js");
 
 	//Server up!
 	app.get("/", function(req, res){
@@ -11,24 +13,19 @@ exports.routes = function(app){
 		 res.render(index);
 	});
 
-
 	//2. Mostre um imóvel específico em Spotippos =]
 	app.get("/properties/:id", function(req, res){
-
-		searchProperties.one(req.params, res);
-
+		onePropertie.load(req.params, res);
 	});
 
 	//3. Busque imóveis em Spotippos :D
 	app.get("/properties", function(req, res){
-		searchProperties.many(req.query, res);		
+		manyProperties.load(req.query, res);		
 
 	});
 
 	//1. Crie imóveis em Spotippos :)
 	app.post("/property", function(req, res){
-
-		insertProperty.insertProperty(req.body, res);
-
+		property.insert(req.body, res);
 	});
 }

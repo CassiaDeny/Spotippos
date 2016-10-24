@@ -1,3 +1,5 @@
+'use strict';
+
 var provinces = require("./data/provinces.json");
 
 exports.pointProvince = function(long, lat){

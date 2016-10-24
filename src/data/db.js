@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require("./config.json");
 var connectionStr = "mongodb://" + config.usr + ":" + config.pwd + "@" + config.host + "/" + config.db;
 

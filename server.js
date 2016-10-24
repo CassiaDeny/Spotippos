@@ -14,7 +14,7 @@ router.routes(app);
 
 var server = app.listen(process.env.PORT || 3000, function(){
 	var port = server.address().port;
-	console.log("Server is running on port " + port);
+	console.log("Servidor rodando na porta " + port);
 });
 
 function handlerError(res, reason, message, code){

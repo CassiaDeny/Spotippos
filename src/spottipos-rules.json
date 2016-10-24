@@ -10,11 +10,11 @@
 		}
 	},
 	"characteristics": {
-		"bed": {
+		"beds": {
 			"min": 1,
 			"max": 5
 		},
-		"bath": {
+		"baths": {
 			"min": 1,
 			"max": 4
 		},

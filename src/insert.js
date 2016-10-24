@@ -1,9 +1,11 @@
+'use strict';
+
 var val = require("./validations");
 var dbConn = require("./data/db.js");
 var json = {httpCode:"", msg:"", data:""};
 var res;
 
-exports.insertProperty = function(body, response){
+exports.insert = function(body, response){
 	
 	var res = response;
 	var error = val.validations(body, res);
@@ -34,7 +36,7 @@ exports.insertProperty = function(body, response){
 					if (err) {
 						json.msg = "Error";
 			    		json.data = err;
-			    		json.httpCode = 201;
+			    		json.httpCode = 500;
 
 			    		res.status(json.httpCode).json(json);
 
@@ -52,7 +54,7 @@ exports.insertProperty = function(body, response){
 				    				res.status(json.httpCode).json(json);
 
 				    			} else {
-				    				json.msg = "Sucess";
+				    				json.msg = "Success";
 				    				json.data = {id: property.id};
 				    				json.httpCode = 201;
 
